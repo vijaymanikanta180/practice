@@ -1,0 +1,46 @@
+Review Session of 4th Week
+
+Jenkins Freestyle Job
+1. We create the Job
+2. We configure all the Steps to Integrate Git, Maven, etc
+
+Pipeline Job
+1. Write a script and re use it for any other Job
+2. Enables the Stage View
+
+Stage 1 -- 10 Secs  Git
+Stage 2-- 12 minutes Maven
+Stage 3 - 1 hour  Fortify
+Stage 4 - 34 minutes -- Sonar
+Stage 5 - 2 Hours -- Black Duck Scan
+
+yum install httpd
+
+Download the YAML file from Merritos
+Understand it
+Login to EC2 Instance from Git Bash
+Switch user to ansible su - ansible
+Create a file with extension .yaml or .yml
+then execute the below command
+ansible-playbook <YAML filename>
+
+Files Uploaded
+1. installgit.yaml  -- Installs git Package
+2. installLAMP.yaml -- Installs LAMP stack (Apache, PHP, PHP MySQL client)
+3. InstallLAMP-Conditions.yaml
+	a. Conditional Statements
+	b. Loops
+	c. Handlers
+
+4. Tags -- helps you to execute the specified tasks from your playbook based on the labels you tageed for the tasks
+
+ansible-playbook apache.yaml --tags "install"	
+
+5. Ansible-Galaxy
+ansible-galaxy install geerlingguy.nginx
+
+ansible-galaxy list
+
+Get the Facts 
+ansible all -m setup | more
+ansible all -m setup -a 'filter=ansible_distribution*'

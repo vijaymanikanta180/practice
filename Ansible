@@ -1,0 +1,98 @@
+1. Command to execute ping for all the hosts defined in Inventory file 
+ansible -m ping all
+
+2. Execute Playbook
+ansible-playbook pingall.yaml
+
+3. Execute ad-hoc command 
+ansible all -m command -a "whoami"
+
+4. Sample Inventory file to categorize the server groups
+[local]
+localhost
+	
+[webserver]
+<IP Address or host name>
+	
+[ubuntu]
+<IP Address or host name>
+
+5.Our own Inventory file to execute for set of hosts
+ansible ubuntu -i myhosts -m ping
+
+6. Get the Facts 
+ansible all -m setup | more
+ansible all -m setup -a 'filter=ansible_distribution*'
+
+7. Execute the Playbook with Tags
+
+ansible-playbook apache.yaml --tags "install"	
+
+8. ansible-galaxy install geerlingguy.nginx
+
+9. ansible-galaxy list  --> To list down the roles downloaded from anisble-galaxy
+
+10. Initialize the Role named LAMP_Stack
+ansible-galaxy init LAMP_Stack
+
+Variables:
+1. Assume that you have 10 Servers with Two Groups like below Inventory file
+
+[Webservers]
+WS1
+WS2
+WS3
+WS4
+WS5
+
+{AppServers]
+AS1
+AS2
+AS3
+AS4
+AS5
+
+you wanted to install httpd package on all 4 Servers WS1 - WS4 and Wanted to install nano Editor package in WS5. Your YAML file looks like the below
+main.yaml
+---
+- hosts: Webservers
+ become: yes
+ tasks:
+ - name: install web server
+ yum:
+   name:  "{{webserver_package}}"
+   state: present
+
+You are going to create two folders
+1. group_vars
+The file name is Webservers and the content nside it is
+---
+  webserver_package: httpd
+
+2. host_vars
+The file name is WS5 and the content inside it is
+
+---
+  webserver_package: nano
+
+Example 2: 
+main.yaml
+---
+  - hosts: all
+    tasks:
+    - name: Just checking Group Variables
+      debug:
+       msg: "{{log_folder}}"
+
+group_vars --> folder
+Webservers --> file
+---
+  log_folder: "/home/ansible/groupvars/logs"
+
+host_vars--> folder
+hostname --> file
+---
+  log_folder: "/home/ansible/hostvars/logs"
+
+
+
